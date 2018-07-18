@@ -57,3 +57,45 @@ exports.postTodo = async function(req, res){
     }
     
 }
+
+function compare(a,b) {
+    if (a.priority < b.priority)
+        return -1
+    if (a.priority > b.priority)
+        return 1
+    return 0
+}
+
+function backCompare(a,b) {
+    if (a.priority < b.priority)
+        return 1
+    if (a.priority > b.priority)
+        return -1
+    return 0
+}
+
+exports.getTodo = async function(req, res){
+    try{
+        const id = req.user.id
+        const todo = await Todo.find({user_id:id})
+        const { view } = req.query
+        if(view=='ascending'){
+            todo.sort(compare)
+        }else if(view == 'descending'){
+            todo.sort(backCompare)
+        }
+        res.json({
+            status:'success',
+            data:{
+                todo
+            }
+        })
+        
+    }catch(err){
+        console.log(err)
+        res.json({
+            status:'failed',
+            error:err
+        })
+    }
+}

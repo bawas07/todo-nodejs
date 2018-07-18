@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 const { checkAuth, checkValidation } = require('../controller/auth.controller')
-const { todoValidator, postTodo } = require('../controller/todo.controller')
+const { todoValidator, postTodo, getTodo } = require('../controller/todo.controller')
 
 /* GET users listing. */
 router.get('/', function(req, res,) {
@@ -9,5 +9,7 @@ router.get('/', function(req, res,) {
 })
 
 router.post('/todo', checkAuth, todoValidator, checkValidation, postTodo )
+
+router.get('/todo', checkAuth, getTodo )
 
 module.exports = router
