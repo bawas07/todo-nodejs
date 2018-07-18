@@ -3,19 +3,20 @@ const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
 const { secret } = require('../config/jwt.config')
 const { body } = require('express-validator/check')
+const mongoose = require('mongoose')
 
-exports.logregValidation = [
+exports.logregValidator = [
     body('username')
-      .isLength({min:0, max:10})
-      .withMessage('Username must not more than 100 character')
-      .isString()
-      .withMessage('Username must be string'),
+        .isLength({min:0, max:10})
+        .withMessage('Username must not more than 100 character')
+        .isString()
+        .withMessage('Username must be string'),
     body('password')
-    .isLength({min:0, max:20})
-    .withMessage('password must not more than 20 character')
-    .isString()
-    .withMessage('password must be string')
-    ]
+        .isLength({min:0, max:20})
+        .withMessage('password must not more than 20 character')
+        .isString()
+        .withMessage('password must be string')
+]
 
 exports.login = async function(req, res){
     const { username, password } = req.body
@@ -36,15 +37,14 @@ exports.login = async function(req, res){
         {
             expiresIn:'2h'
         }
-    ) 
-    res.status(200).json({
-        status:'success',
-        data:{
-            token:token
-        }
-    })
+        ) 
+        res.status(200).json({
+            status:'success',
+            data:{
+                token:token
+            }
+        })
     }catch(err){
-        console.log(err)
         res.status(500).json({
             status:'failed',
             error:err.message
@@ -67,16 +67,15 @@ exports.register = async function(req, res){
         })
         await user.save()
         res.status(200).json({
-            status:"success",
+            status:'success',
             data:{
                 username:username,
                 password:password
             }
         })
     }catch(err){
-        console.log(err)
         res.status(500).json({
-            status: "failed",
+            status: 'failed',
             error:err
         })
     }
