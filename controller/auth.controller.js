@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const secret = require('../config/jwt.config')
+const { validationResult } = require('express-validator/check')
 
 exports.checkAuth = function(req, res, next){
     const token = req.header.authorization
@@ -26,4 +27,13 @@ exports.checkAuth = function(req, res, next){
             })
         }
     })
+}
+
+exports.checkValidation = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.status(422).json({ errors: errors.array() });
+    }else{
+        next()
+    }
 }

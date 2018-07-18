@@ -2,6 +2,20 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
 const { secret } = require('../config/jwt.config')
+const { body } = require('express-validator/check')
+
+exports.logregValidation = [
+    body('username')
+      .isLength({min:0, max:10})
+      .withMessage('Username must not more than 100 character')
+      .isString()
+      .withMessage('Username must be string'),
+    body('password')
+    .isLength({min:0, max:20})
+    .withMessage('password must not more than 20 character')
+    .isString()
+    .withMessage('password must be string')
+    ]
 
 exports.login = async function(req, res){
     const { username, password } = req.body
