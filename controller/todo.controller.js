@@ -138,3 +138,23 @@ exports.editTodo = async function(req, res){
         })
     }
 }
+
+exports.updateTodo = async function(req, res){
+    try{
+        const id = req.params.id
+        const { is_done } = req.body
+        const todo = await Todo.findOne({_id:id})
+        todo.is_done = is_done
+        const newTodo = await todo.save()
+        res.status(200).json({
+            status:'success',
+            data:newTodo
+        })
+    }catch(err){
+        console.log(err)
+        res.json({
+            status:'failed',
+            error:err.message
+        })
+    }
+}
