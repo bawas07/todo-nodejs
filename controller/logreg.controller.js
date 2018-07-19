@@ -76,7 +76,7 @@ exports.register = async function(req, res){
     }catch(err){
         res.status(500).json({
             status: 'failed',
-            error:err
+            error:err.message
         })
     }
     

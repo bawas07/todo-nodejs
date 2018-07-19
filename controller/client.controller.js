@@ -16,7 +16,7 @@ exports.getTodoDone = async function(req, res){
         console.log(err)
         res.json({
             status:'failed',
-            error:err.msg
+            error:err.message
         })
     }
 }

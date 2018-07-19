@@ -52,7 +52,7 @@ exports.postTodo = async function(req, res){
     }catch(err){
         res.json({
             status: 'failed',
-            error:err
+            error:err.message
         })
     }
     
@@ -95,7 +95,7 @@ exports.getTodo = async function(req, res){
         console.log(err)
         res.json({
             status:'failed',
-            error:err
+            error:err.message
         })
     }
 }
@@ -104,14 +104,37 @@ exports.deleteTodo = async function(req, res){
     try{
         const id = req.params.id.toString()
         const todo = await Todo.findOneAndRemove({_id:id})
+        if(!todo){
+            throw new Error('todo item not found')
+        }
         res.status(200).json({status: 'removed',data: todo})
     }catch(err){
         console.log(err)
         res.json({
             status: 'failed',
-            error:err
+            error:err.message
         })
     }
-    
+}
 
+exports.editTodo = async function(req, res){
+    try{
+        const id = req.params.id
+        const { name, priority, location } = req.body
+        const todo = await Todo.findOne({_id:id})
+        todo.name = name
+        todo.priority = priority
+        todo.location = location
+        const newTodo = await todo.save()
+        res.status(200).json({
+            status:'success',
+            data:newTodo
+        })
+    }catch(err){
+        console.log(err)
+        res.json({
+            status: 'failed',
+            error:err.message
+        })
+    }
 }
