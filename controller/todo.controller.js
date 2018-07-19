@@ -99,3 +99,19 @@ exports.getTodo = async function(req, res){
         })
     }
 }
+
+exports.deleteTodo = async function(req, res){
+    try{
+        const id = req.params.id.toString()
+        const todo = await Todo.findOneAndRemove({_id:id})
+        res.status(200).json({status: 'removed',data: todo})
+    }catch(err){
+        console.log(err)
+        res.json({
+            status: 'failed',
+            error:err
+        })
+    }
+    
+
+}
