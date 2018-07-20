@@ -25,7 +25,7 @@ exports.postTodo = async function(req, res){
     try{
         const { name, priority, location } = req.body
         const time_start = new Date(Date())
-        const user_id = req.user.id
+        const user_id = req.user._id
         const is_done = false
 
         const todo = Todo({
@@ -76,7 +76,7 @@ function backCompare(a,b) {
 
 exports.getTodo = async function(req, res){
     try{
-        const id = req.user.id
+        const id = req.user._id
         const todo = await Todo.find({user_id:id})
         const { view } = req.query
         if(view=='ascending'){

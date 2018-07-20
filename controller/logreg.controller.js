@@ -60,17 +60,18 @@ exports.register = async function(req, res){
         if (checkUser){
             throw new Error('Username has been used')
         }
+        const hash = await bcrypt.hash(password, 10)
         const user = User({
             _id: new mongoose.Types.ObjectId(),
             username: username,
-            password: password
+            password: hash
         })
         await user.save()
         res.status(200).json({
             status:'success',
             data:{
                 username:username,
-                password:password
+                password:hash
             }
         })
     }catch(err){
