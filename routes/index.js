@@ -1,8 +1,8 @@
 var express = require('express')
 var router = express.Router()
-const { login, logregValidator, register } = require('../controller/logreg.controller')
-const { checkValidation } = require('../controller/auth.controller')
-const { getTodoDone } = require('../controller/client.controller')
+const { login, logregValidator, register } = require('../controller-mysql/logreg.controller')
+const { checkValidation } = require('../controller-mysql/auth.controller')
+const { getTodoDone } = require('../controller-mysql/client.controller')
 
 /* GET all finished todo items */
 router.get('/', getTodoDone)

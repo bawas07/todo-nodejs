@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
-const { checkAuth, checkValidation } = require('../controller/auth.controller')
-const { todoValidator, postTodo, getTodo, deleteTodo, editTodo, updateTodo } = require('../controller/todo.controller')
+const { checkAuth, checkValidation } = require('../controller-mysql/auth.controller')
+const { todoValidator, postTodo, getTodo, deleteTodo, editTodo, updateTodo } = require('../controller-mysql/todo.controller')
 
 /* POST name, priority, and location to save it to database */
 router.post('/todo', checkAuth, todoValidator, checkValidation, postTodo )

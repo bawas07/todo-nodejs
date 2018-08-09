@@ -19,7 +19,7 @@ exports.checkAuth = function(req, res, next){
             })
         }
         req.user = decode
-        console.log(decode)
+        console.log("decode :",decode)
         if(decode){
             next()
         }else{
